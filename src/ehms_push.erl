@@ -10,14 +10,14 @@ general_notification(DeviceToken, Title, Content) ->
     {ok, PkgName} = application:get_env(ehms, pkg_name),
     TokenInfo = ehms:get_access_token_info(),
     AccessToken = maps:get(<<"access_token">>, TokenInfo),
-    general_notification(AppId, eutil:to_binary(PkgName), AccessToken, DeviceToken, Title, Content).
+    general_notification(AppId, PkgName, AccessToken, DeviceToken, Title, Content).
 
 general_notification(AppId, PkgName, AccessToken, DeviceToken, Title, Content) ->
     Payload = #{hps =>
                 #{msg =>
                   #{type => 3,
                     body => #{title => Title, content => Content},
-                    action => #{type => 3, param => #{appPkgName => PkgName}}
+                    action => #{type => 3, param => #{appPkgName => eutil:to_binary(PkgName)}}
                    }
                  }
                },
