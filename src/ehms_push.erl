@@ -52,6 +52,6 @@ send(AppId, AccessToken, DeviceTokens, Payload) ->
         #{<<"code">> := <<"80000000">>} ->
             {ok, Result};
         _ ->
-            ?ERROR_MSG("ehms_push error, DeviceTokens: ~p, Result: ~p", [DeviceTokens, Result]),
+            error_logger:error_msg("ehms_push error, DeviceTokens: ~p, Result: ~p", [DeviceTokens, Result]),
             {error, Result}
     end.
