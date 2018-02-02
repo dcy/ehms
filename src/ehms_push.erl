@@ -10,7 +10,7 @@ general_notification(DeviceToken, Title, Content) ->
     {ok, PkgName} = application:get_env(ehms, pkg_name),
     TokenInfo = ehms:get_access_token_info(),
     AccessToken = maps:get(<<"access_token">>, TokenInfo),
-    general_notification(AppId, PkgName, AccessToken, DeviceToken, Title, Content).
+    general_notification(AppId, eutil:to_binary(PkgName), AccessToken, DeviceToken, Title, Content).
 
 general_notification(AppId, PkgName, AccessToken, DeviceToken, Title, Content) ->
     Payload = #{hps =>
@@ -42,7 +42,7 @@ general_app_msg(AppId, AccessToken, DeviceToken, Content) ->
 
 
 send(AppId, AccessToken, DeviceTokens, Payload) ->
-    URLTail = hackney_url:urlencode(eutil:json_encode(#{ver => <<"1">>, appId => integer_to_binary(AppId)})),
+    URLTail = hackney_url:urlencode(eutil:json_encode(#{ver => <<"1">>, appId => eutil:to_binary(AppId)})),
     URL = <<"https://api.push.hicloud.com/pushsend.do?nsp_ctx=", URLTail/binary>>,
     Data = #{access_token => AccessToken, nsp_ts => erlang:system_time(second),
              nsp_svc => <<"openpush.message.api.send">>, device_token_list => eutil:json_encode(DeviceTokens),
