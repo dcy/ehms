@@ -1,0 +1,19 @@
+{application, ehms,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { ehms_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    lager,
+    hackney,
+    eutil
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.
